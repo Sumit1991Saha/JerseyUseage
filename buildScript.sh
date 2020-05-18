@@ -1,15 +1,22 @@
+#!/bin/zsh
+
 # chmod 777 TOMCAT_INSTALLATION_DIR/bin/catalina.sh
 
+APACHE_TOMCAT_INSTALLATION_DIR="/Users/sumit.saha/Desktop/ApacheTools/apache-tomcat-9.0.35"
+PROJECT_PATH="/Users/sumit.saha/codebase"
+PROJECT_NAME="JerseyUseage"
+WAR_PACKAGE=${PROJECT_NAME}.war
+
 echo "Stopping Tomcat"
-/Users/sumit.saha/Desktop/ApacheTools/apache-tomcat-9.0.35/bin/catalina.sh stop
+${APACHE_TOMCAT_INSTALLATION_DIR}/bin/catalina.sh stop
 
 echo "\n Building Project"
 mvn clean install
 
 echo "\n Moving Project War file"
-rm -rf /Users/sumit.saha/Desktop/ApacheTools/apache-tomcat-9.0.35/webapps/JerseyUseage
-rm /Users/sumit.saha/Desktop/ApacheTools/apache-tomcat-9.0.35/webapps/JerseyUseage.war
-cp /Users/sumit.saha/codebase/JerseyUseage/target/JerseyUseage.war /Users/sumit.saha/Desktop/ApacheTools/apache-tomcat-9.0.35/webapps
+rm -rf ${APACHE_TOMCAT_INSTALLATION_DIR}/webapps/${PROJECT_NAME}
+rm ${APACHE_TOMCAT_INSTALLATION_DIR}/webapps/${WAR_PACKAGE}
+cp ${PROJECT_PATH}/${PROJECT_NAME}/target/${WAR_PACKAGE} ${APACHE_TOMCAT_INSTALLATION_DIR}/webapps
 
 echo "\n Starting Tomcat"
-/Users/sumit.saha/Desktop/ApacheTools/apache-tomcat-9.0.35/bin/catalina.sh start
+${APACHE_TOMCAT_INSTALLATION_DIR}/bin/catalina.sh start
