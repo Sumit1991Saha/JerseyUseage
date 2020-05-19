@@ -5,9 +5,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-/**
- * Root resource (exposed at "myresource" path)
- */
+// http://localhost:8080/JerseyUseage/webapi/myresource
 @Path("myresource")
 public class MyResource {
 
@@ -20,6 +18,6 @@ public class MyResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getIt() {
-        return "Got it Finally!";
+        return "Got it Finally!!!";
     }
 }
