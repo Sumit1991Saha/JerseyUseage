@@ -28,14 +28,14 @@ public class ActivityResourceWithJson {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/activities/{activityId}")
-	public Activity getActivity(@PathParam ("activityId") String activityId) {
+	public Activity getActivity(@PathParam ("activityId") long activityId) {
 		return activityRepository.findActivity(activityId);
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/activities/{activityId}/user")
-	public User getActivityUser(@PathParam ("activityId") String activityId) {
+	public User getActivityUser(@PathParam ("activityId") long activityId) {
 		Activity activity = activityRepository.findActivity(activityId);
 		User user = activity.getUser();
 		return user;
