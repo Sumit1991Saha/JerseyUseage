@@ -8,6 +8,6 @@ public interface ActivityRepository {
 
 	List<Activity> findAllActivities();
 
-	Activity findActivity(String activityId);
+	Activity findActivity(long activityId);
 
 }

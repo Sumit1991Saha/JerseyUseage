@@ -13,32 +13,30 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 //http:localhost:8080/JerseyUseage/webapi/xml
-@Path("/xml")
+@Path("/xml/activities")
 public class ActivityResourceWithXml {
 
 	private ActivityRepository activityRepository = new ActivityRepositoryStub();
 
 	@GET
 	@Produces(MediaType.APPLICATION_XML)
-	@Path("/activities")
 	public List<Activity> getAllActivities() {
 		return activityRepository.findAllActivities();
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_XML)
-	@Path("/activities/{activityId}")
-	public Activity getActivity(@PathParam ("activityId") String activityId) {
+	@Path("/{activityId}")
+	public Activity getActivity(@PathParam ("activityId") long activityId) {
 		return activityRepository.findActivity(activityId);
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_XML)
-	@Path("/activities/{activityId}/user")
-	public User getActivityUser(@PathParam ("activityId") String activityId) {
+	@Path("/{activityId}/user")
+	public User getActivityUser(@PathParam ("activityId") long activityId) {
 		Activity activity = activityRepository.findActivity(activityId);
 		User user = activity.getUser();
 		return user;
 	}
-	
 }
