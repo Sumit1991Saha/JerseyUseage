@@ -10,4 +10,6 @@ public interface ActivityRepository {
 
 	Activity findActivity(long activityId);
 
+	void create(Activity activity);
+
 }

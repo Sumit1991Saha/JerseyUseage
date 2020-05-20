@@ -12,9 +12,10 @@ import java.util.stream.Collectors;
 public class ActivityRepositoryStub implements ActivityRepository {
 
 	private static Map<Long, Activity> activitiesMap = new HashMap<>();
+	private static long idCount = 1L;
 	static {
 		Activity activity1 = new Activity();
-		activity1.setId(1L);
+		activity1.setId(idCount++);
 		activity1.setDescription("Swimming");
 		activity1.setDuration(55);
 		User user1 = new User();
@@ -24,7 +25,7 @@ public class ActivityRepositoryStub implements ActivityRepository {
 		activitiesMap.put(activity1.getId(), activity1);
 
 		Activity activity2 = new Activity();
-		activity2.setId(2L);
+		activity2.setId(idCount++);
 		activity2.setDescription("Cycling");
 		activity2.setDuration(120);
 		User user2 = new User();
@@ -40,5 +41,12 @@ public class ActivityRepositoryStub implements ActivityRepository {
 	@Override
 	public Activity findActivity(long activityId) {
 		return activitiesMap.get(activityId);
+	}
+
+	@Override
+	public void create(Activity activity) {
+		long currentIdCount = idCount++;
+		activity.setId(currentIdCount);
+		activitiesMap.put(currentIdCount, activity);
 	}
 }
