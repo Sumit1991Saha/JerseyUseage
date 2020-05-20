@@ -1,4 +1,4 @@
-package com.saha.model;
+package com.saha.xml.model;
 
 import lombok.Data;
 import javax.xml.bind.annotation.XmlRootElement;

@@ -1,6 +1,6 @@
-package com.saha.repository;
+package com.saha.xml.repository;
 
-import com.saha.model.Activity;
+import com.saha.xml.model.Activity;
 
 import java.util.List;
 

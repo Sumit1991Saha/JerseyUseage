@@ -1,12 +1,13 @@
-package com.saha.repository;
+package com.saha.xml.repository;
 
-import com.saha.model.Activity;
-import com.saha.model.User;
+import com.saha.xml.model.Activity;
+import com.saha.xml.model.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ActivityRepositoryStub implements ActivityRepository {
 

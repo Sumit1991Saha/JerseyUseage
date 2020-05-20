@@ -1,9 +1,9 @@
 package com.saha;
 
-import com.saha.model.Activity;
-import com.saha.model.User;
-import com.saha.repository.ActivityRepository;
-import com.saha.repository.ActivityRepositoryStub;
+import com.saha.xml.model.Activity;
+import com.saha.xml.model.User;
+import com.saha.xml.repository.ActivityRepository;
+import com.saha.xml.repository.ActivityRepositoryStub;
 
 import java.util.List;
 import javax.ws.rs.GET;
