@@ -1,39 +1,46 @@
 package com.saha;
 
 import com.saha.client.ActivityClient;
+import com.saha.client.ActivitySearchClient;
 import com.saha.model.Activity;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ClientDriver {
 
-    private ActivityClient client;
+    private ActivityClient activityClient;
+    private ActivitySearchClient activitySearchClient;
 
     @Before
     public void setup() {
-        client = new ActivityClient();
+        activityClient = new ActivityClient();
+        activitySearchClient = new ActivitySearchClient();
     }
 
-    @Before
+    @After
     public void teardown() {
         System.out.println("/*********/");
     }
 
     @Test
-    public void testGetByIdvalidIdScenario() {
-        System.out.println("testGetByIdvalidIdScenario :- ");
-        Activity activity = client.getActivityById(1L);
+    public void testGetByIdValidIdScenario() {
+        System.out.println("testGetByIdValidIdScenario :- ");
+        Activity activity = activityClient.getActivityById(1L);
         System.out.println(activity.toString());
         Assert.assertNotNull(activity);
     }
 
     @Test
-    public void testGetByIdInalidIdScenario() {
-        System.out.println("testGetByIdInalidIdScenario");
-        Activity activity = client.getActivityById(100L);
+    public void testGetByIdInvalidIdScenario() {
+        System.out.println("testGetByIdInvalidIdScenario");
+        Activity activity = activityClient.getActivityById(100L);
         Assert.assertNull(activity);
     }
 
@@ -41,7 +48,7 @@ public class ClientDriver {
     public void testGetAllValidIdScenario() {
         System.out.println("testGetAllValidIdScenario :- ");
 
-        List<Activity> activities = client.getAllActivities();
+        List<Activity> activities = activityClient.getAllActivities();
         activities.forEach(activity -> System.out.println(activity));
 
         Assert.assertNotNull(activities);
@@ -55,7 +62,7 @@ public class ClientDriver {
         activity.setDescription("Jogging");
         activity.setDuration(45);
 
-        Activity createdActivity = client.createActivity(activity);
+        Activity createdActivity = activityClient.createActivity(activity);
         System.out.println(createdActivity.toString());
         Assert.assertNotNull(createdActivity);
     }
@@ -90,17 +97,32 @@ public class ClientDriver {
         activity.setDescription("Tennis");
         activity.setDuration(45);
 
-        client.updateActivity(100, activity);
+        activityClient.updateActivity(100, activity);
     }
 
     @Test
     public void testDeleteActivity() {
         System.out.println("testDeleteActivity :- ");
         int idOfActivityToBeDeleted = 1;
-        client.deleteActivity(idOfActivityToBeDeleted);
+        activityClient.deleteActivity(idOfActivityToBeDeleted);
 
-        Activity activity = client.getActivityById(idOfActivityToBeDeleted);
+        Activity activity = activityClient.getActivityById(idOfActivityToBeDeleted);
 
         Assert.assertNull(activity);
+    }
+
+    @Test
+    public void testSearchActivities() {
+        System.out.println("testSearchActivities :- ");
+
+        String param = "description";
+        String[] searchVales = {"Swimming", "Jogging"};
+        Set<String> descriptions = new HashSet<>(Arrays.asList(searchVales));
+
+        List<Activity> activities = activitySearchClient.searchActivities(param, searchVales);
+        System.out.println(activities);
+
+        Assert.assertEquals(searchVales.length, activities.size());
+        activities.forEach(activity -> Assert.assertTrue(descriptions.contains(activity.getDescription())));
     }
 }

@@ -5,8 +5,11 @@ import com.saha.model.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ActivityRepositoryStub implements ActivityRepository {
 
@@ -32,6 +35,12 @@ public class ActivityRepositoryStub implements ActivityRepository {
 		user2.setName("Saha");
 		activity2.setUser(user2);
 		activitiesMap.put(activity2.getId(), activity2);
+
+		Activity activity3 = new Activity();
+		activity3.setId(idCount++);
+		activity3.setDescription("Jogging");
+		activity3.setDuration(50);
+		activitiesMap.put(activity3.getId(), activity3);
 	}
 	public List<Activity> findAllActivities () {
 		return new ArrayList<>(activitiesMap.values());
@@ -58,5 +67,15 @@ public class ActivityRepositoryStub implements ActivityRepository {
 	@Override
 	public void delete(long activityId) {
 		activitiesMap.remove(activityId);
+	}
+
+	@Override
+	public List<Activity> findByDescriptions(List<String> descriptions) {
+		Set<String> setOfDescriptions = new HashSet<>(descriptions);
+		List<Activity> activities = activitiesMap.values()
+				.stream()
+				.filter(activity -> setOfDescriptions.contains(activity.getDescription()))
+				.collect(Collectors.toList());
+		return activities;
 	}
 }
