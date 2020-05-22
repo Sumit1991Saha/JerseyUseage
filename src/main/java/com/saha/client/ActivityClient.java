@@ -72,4 +72,18 @@ public class ActivityClient {
 
         return response.readEntity(Activity.class);
     }
+
+    public Activity updateActivity(long id, Activity activity) {
+        WebTarget target = client.target(BASE_URL);
+
+        //returns data in object's format
+        Response response = target.path(JSON_RESOURCE_PATH + id)
+                .request(MediaType.APPLICATION_JSON)
+                .put(Entity.entity(activity, MediaType.APPLICATION_JSON));
+        if (response.getStatus() != Response.Status.OK.getStatusCode()) {
+            throw new RuntimeException(response.getStatus() + " Error Ocurred");
+        }
+
+        return response.readEntity(Activity.class);
+    }
 }

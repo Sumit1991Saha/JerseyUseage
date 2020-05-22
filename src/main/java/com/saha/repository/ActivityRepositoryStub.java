@@ -48,4 +48,10 @@ public class ActivityRepositoryStub implements ActivityRepository {
 		activity.setId(currentIdCount);
 		activitiesMap.put(currentIdCount, activity);
 	}
+
+	@Override
+	public void update(Activity activity) {
+		long activityId = activity.getId();
+		activitiesMap.put(activityId, activity);
+	}
 }

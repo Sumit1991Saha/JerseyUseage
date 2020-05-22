@@ -12,4 +12,6 @@ public interface ActivityRepository {
 
 	void create(Activity activity);
 
+	void update(Activity activity);
+
 }
