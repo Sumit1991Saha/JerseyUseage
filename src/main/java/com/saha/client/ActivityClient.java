@@ -9,6 +9,7 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 public class ActivityClient {
 
@@ -31,11 +32,14 @@ public class ActivityClient {
                 .get(String.class));*/
 
         //returns data in object's format
-        Activity response = target.path(JSON_RESOURCE_PATH + id)
+        Response response = target.path(JSON_RESOURCE_PATH + id)
                 .request(MediaType.APPLICATION_JSON)
-                .get(Activity.class);
+                .get(Response.class);
+        if (response.getStatus() != Response.Status.OK.getStatusCode()) {
+            throw new RuntimeException("Error Ocurred :- " + response.getStatus());
+        }
 
-        return response;
+        return response.readEntity(Activity.class);
     }
 
     public List<Activity> getAllActivities() {
@@ -43,10 +47,14 @@ public class ActivityClient {
         WebTarget target = client.target(BASE_URL);
 
         //returns data in object's format
-        List<Activity> response = target.path(JSON_RESOURCE_PATH)
+        Response response = target.path(JSON_RESOURCE_PATH)
                 .request(MediaType.APPLICATION_JSON)
-                .get(new GenericType<List<Activity>>(){});
+                .get();
 
-        return response;
+        if (response.getStatus() != Response.Status.OK.getStatusCode()) {
+            throw new RuntimeException(response.getStatus() + " Error Ocurred");
+        }
+
+        return response.readEntity(new GenericType<List<Activity>>(){});
     }
 }
