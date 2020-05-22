@@ -5,7 +5,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-// http://localhost:8080/JerseyUseage/webapi/myresource
+// http://localhost:8180/JerseyUseage/webapi/myresource
 @Path("myresource")
 public class MyResource {
 

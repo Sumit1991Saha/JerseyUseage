@@ -12,7 +12,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-//http:localhost:8080/JerseyUseage/webapi/xml
+//http://localhost:8180/JerseyUseage/webapi/xml
 @Path("/xml/activities")
 public class ActivityResourceWithXml {
 

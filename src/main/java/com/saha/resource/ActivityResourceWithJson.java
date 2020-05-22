@@ -14,7 +14,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-//http:localhost:8080/JerseyUseage/webapi/json
+//http://localhost:8180/JerseyUseage/webapi/json
 @Path("/json/activities")
 public class ActivityResourceWithJson {
 
