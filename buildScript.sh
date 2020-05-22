@@ -18,5 +18,19 @@ rm -rf ${APACHE_TOMCAT_INSTALLATION_DIR}/webapps/${PROJECT_NAME}
 rm ${APACHE_TOMCAT_INSTALLATION_DIR}/webapps/${WAR_PACKAGE}
 cp ${PROJECT_PATH}/${PROJECT_NAME}/target/${WAR_PACKAGE} ${APACHE_TOMCAT_INSTALLATION_DIR}/webapps
 
-echo "\n Starting Tomcat"
-${APACHE_TOMCAT_INSTALLATION_DIR}/bin/catalina.sh start
+while getopts ":d" opt; do
+  case $opt in
+    d)
+      echo "\n Starting Tomcat in debug mode"
+      export JPDA_ADDRESS=8000
+      export JPDA_TRANSPORT=dt_socket
+      ${APACHE_TOMCAT_INSTALLATION_DIR}/bin/catalina.sh jpda run
+      ;;
+    \?)
+      echo "\n Starting Tomcat in standalone mode"
+      ${APACHE_TOMCAT_INSTALLATION_DIR}/bin/catalina.sh start
+      ;;
+  esac
+done
+
+

@@ -1,5 +1,6 @@
-Execute the buildScript.sh to build the maven project, copy paste the war file to tomcat's webapps location.
-And then restart the tomcat server.
+Steps to build and deploy to tomcat :-
+1. Normal mode :- ./buildScript.sh -n
+2. Debug mode :-  ./buildScript.sh -d   (Tomcat's debug port is 8000)
 
 Simple response :- localhost:8180/JerseyUseage/webapi/myresource
 XML Response :- localhost:8180/JerseyUseage/webapi/xml/activities
