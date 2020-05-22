@@ -15,9 +15,10 @@ Important points :-
 
 
 Resources :- 
-1. Create @Post :- localhost:8180/JerseyUseage/webapi/json/activities
-2. Get All Activities @Get :- localhost:8180/JerseyUseage/webapi/json/activities
-3. Get Activity by id :- localhost:8180/JerseyUseage/webapi/json/activities/{activityId}
-3. Update an Activity :- localhost:8180/JerseyUseage/webapi/json/activities/{activityId}
+1. @Post - Create :- localhost:8180/JerseyUseage/webapi/json/activities
+2. @Get - Get All Activities :- localhost:8180/JerseyUseage/webapi/json/activities
+3. @Get - Get Activity by id :- localhost:8180/JerseyUseage/webapi/json/activities/{activityId}
+4. @Put - Update an Activity :- localhost:8180/JerseyUseage/webapi/json/activities/{activityId}
+4. @Delete - Delete an Activity :- localhost:8180/JerseyUseage/webapi/json/activities/{activityId}
 
 
