@@ -5,6 +5,7 @@ import com.saha.model.Activity;
 import java.util.List;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
@@ -56,5 +57,19 @@ public class ActivityClient {
         }
 
         return response.readEntity(new GenericType<List<Activity>>(){});
+    }
+
+    public Activity createActivity(Activity activity) {
+        WebTarget target = client.target(BASE_URL);
+
+        //returns data in object's format
+        Response response = target.path(JSON_RESOURCE_PATH)
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(activity, MediaType.APPLICATION_JSON));
+        if (response.getStatus() != Response.Status.OK.getStatusCode()) {
+            throw new RuntimeException(response.getStatus() + " Error Ocurred");
+        }
+
+        return response.readEntity(Activity.class);
     }
 }
