@@ -23,17 +23,18 @@ public class ClientDriver {
     }
 
     @Test
-    public void testGetByIdInvalidIdScenario() {
-        System.out.println("testGetByIdValidIdScenario :- ");
+    public void testGetByIdvalidIdScenario() {
+        System.out.println("testGetByIdvalidIdScenario :- ");
         Activity activity = client.getActivityById(1L);
         System.out.println(activity.toString());
         Assert.assertNotNull(activity);
     }
 
-    @Test (expected = RuntimeException.class)
-    public void testGetByIdValidIdScenario() {
-        System.out.println("testGetByIdValidIdScenario");
-        client.getActivityById(100L);
+    @Test
+    public void testGetByIdInalidIdScenario() {
+        System.out.println("testGetByIdInalidIdScenario");
+        Activity activity = client.getActivityById(100L);
+        Assert.assertNull(activity);
     }
 
     @Test
@@ -90,5 +91,16 @@ public class ClientDriver {
         activity.setDuration(45);
 
         client.updateActivity(100, activity);
+    }
+
+    @Test
+    public void testDeleteActivity() {
+        System.out.println("testDeleteActivity :- ");
+        int idOfActivityToBeDeleted = 1;
+        client.deleteActivity(idOfActivityToBeDeleted);
+
+        Activity activity = client.getActivityById(idOfActivityToBeDeleted);
+
+        Assert.assertNull(activity);
     }
 }

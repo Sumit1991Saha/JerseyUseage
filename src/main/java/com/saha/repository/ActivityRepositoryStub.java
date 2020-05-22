@@ -54,4 +54,9 @@ public class ActivityRepositoryStub implements ActivityRepository {
 		long activityId = activity.getId();
 		activitiesMap.put(activityId, activity);
 	}
+
+	@Override
+	public void delete(long activityId) {
+		activitiesMap.remove(activityId);
+	}
 }

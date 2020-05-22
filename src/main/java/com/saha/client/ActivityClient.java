@@ -36,7 +36,9 @@ public class ActivityClient {
         Response response = target.path(JSON_RESOURCE_PATH + id)
                 .request(MediaType.APPLICATION_JSON)
                 .get(Response.class);
-        if (response.getStatus() != Response.Status.OK.getStatusCode()) {
+        if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode()) {
+            return null;
+        } else if (response.getStatus() != Response.Status.OK.getStatusCode()) {
             throw new RuntimeException("Error Ocurred :- " + response.getStatus());
         }
 
@@ -85,5 +87,19 @@ public class ActivityClient {
         }
 
         return response.readEntity(Activity.class);
+    }
+
+    public void deleteActivity(int idOfActivityToBeDeleted) {
+        WebTarget target = client.target(BASE_URL);
+
+        //returns data in object's format
+        Response response = target.path(JSON_RESOURCE_PATH + idOfActivityToBeDeleted)
+                .request(MediaType.APPLICATION_JSON)
+                .delete();
+        if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode()) {
+            // do nothing
+        } else if (response.getStatus() != Response.Status.NO_CONTENT.getStatusCode()) {
+            throw new RuntimeException(response.getStatus() + " Error Ocurred");
+        }
     }
 }

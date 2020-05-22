@@ -7,6 +7,7 @@ import com.saha.model.User;
 
 import java.util.List;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -86,5 +87,19 @@ public class ActivityResourceWithJson {
 		}
 		return response;
 	}
-	
+
+	@DELETE
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/{activityId}")
+	public Response deleteActivity(@PathParam ("activityId") long activityId) {
+		Response response;
+		Activity activity = activityRepository.findActivity(activityId);
+		if (activity == null) {
+			response = Response.status(Response.Status.NOT_FOUND).build();
+		} else {
+			activityRepository.delete(activityId);
+			response = Response.noContent().build();
+		}
+		return response;
+	}
 }

@@ -14,4 +14,6 @@ public interface ActivityRepository {
 
 	void update(Activity activity);
 
+	void delete(long id);
+
 }
