@@ -4,6 +4,7 @@ import com.saha.client.ActivityClient;
 import com.saha.client.ActivitySearchClient;
 import com.saha.model.Activity;
 import com.saha.model.ActivitySearch;
+import com.saha.model.ActivitySearchType;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -160,6 +161,46 @@ public class ClientDriver {
     public void testSearchActivitiesUsingSearchObject() {
         System.out.println("testSearchActivitiesUsingSearchObject :- ");
 
+        ActivitySearch activitySearch = createActivitySearchObject(ActivitySearchType.SEARCH_BY_ALL_PARAMS);
+
+        //http://localhost:8180/JerseyUseage/webapi/json/search/activities?description=Swimming&description=Jogging&durationFrom=durationFrom&durationTo=durationTo
+        List<Activity> activities = activitySearchClient.searchActivitiesBasedOnSearchObject(activitySearch);
+        System.out.println(activities);
+
+        Assert.assertEquals(1, activities.size());
+        Assert.assertEquals(activitySearch.getDescriptions().get(0), activities.get(0).getDescription());
+    }
+
+    @Test
+    public void testSearchActivitiesUsingSearchObjectSearchByDescriptions() {
+        System.out.println("testSearchActivitiesUsingSearchObjectSearchByDescriptions :- ");
+
+        ActivitySearch activitySearch = createActivitySearchObject(ActivitySearchType.SEARCH_BY_DESCRIPTIONS);
+
+        //http://localhost:8180/JerseyUseage/webapi/json/search/activities?description=Swimming&description=Jogging&durationFrom=durationFrom&durationTo=durationTo
+        List<Activity> activities = activitySearchClient.searchActivitiesBasedOnSearchObject(activitySearch);
+        System.out.println(activities);
+
+        Assert.assertEquals(activitySearch.getDescriptions().size(), activities.size());
+        activities.forEach(activity -> Assert.assertTrue(activitySearch.getDescriptions().contains(activity.getDescription())));
+    }
+
+    @Test
+    public void testSearchActivitiesUsingSearchObjectSearchByDuration() {
+        System.out.println("testSearchActivitiesUsingSearchObjectSearchByDescriptions :- ");
+
+        ActivitySearch activitySearch = createActivitySearchObject(ActivitySearchType.SEARCH_BY_DURATION);
+
+        //http://localhost:8180/JerseyUseage/webapi/json/search/activities?description=Swimming&description=Jogging&durationFrom=durationFrom&durationTo=durationTo
+        List<Activity> activities = activitySearchClient.searchActivitiesBasedOnSearchObject(activitySearch);
+        System.out.println(activities);
+
+        Assert.assertEquals(2, activities.size());
+        activities.forEach(activity -> Assert.assertTrue(activitySearch.getDurationFrom() <= activity.getDuration()));
+        activities.forEach(activity -> Assert.assertTrue(activitySearch.getDurationTo() >= activity.getDuration()));
+    }
+
+    private ActivitySearch createActivitySearchObject(ActivitySearchType activitySearchType) {
         List<String> descriptions = new ArrayList<String>(){{
             add("Swimming");
             add("Jogging");
@@ -171,12 +212,7 @@ public class ClientDriver {
         activitySearch.setDescriptions(descriptions);
         activitySearch.setDurationFrom(durationFrom);
         activitySearch.setDurationTo(durationTo);
-
-        //http://localhost:8180/JerseyUseage/webapi/json/search/activities?description=Swimming&description=Jogging&durationFrom=durationFrom&durationTo=durationTo
-        List<Activity> activities = activitySearchClient.searchActivitiesBasedOnSearchObject(activitySearch);
-        System.out.println(activities);
-
-        Assert.assertEquals(1, activities.size());
-        Assert.assertEquals(descriptions.get(0), activities.get(0).getDescription());
+        activitySearch.setActivitySearch(activitySearchType);
+        return activitySearch;
     }
 }

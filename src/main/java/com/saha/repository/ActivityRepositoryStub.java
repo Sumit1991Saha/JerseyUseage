@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ActivityRepositoryStub implements ActivityRepository {
 
@@ -95,12 +96,24 @@ public class ActivityRepositoryStub implements ActivityRepository {
 	@Override
 	public List<Activity> findByConstraints(ActivitySearch activitySearch) {
 		Set<String> setOfDescriptions = new HashSet<>(activitySearch.getDescriptions());
-		List<Activity> activities = activitiesMap.values()
-				.stream()
-				.filter(activity -> activity.getDuration() >= activitySearch.getDurationFrom())
-				.filter(activity -> activity.getDuration() <= activitySearch.getDurationTo())
-				.filter(activity -> setOfDescriptions.contains(activity.getDescription()))
-				.collect(Collectors.toList());
+		Stream<Activity> activityStream = activitiesMap.values().stream();
+		switch (activitySearch.getActivitySearch()) {
+			case SEARCH_BY_DESCRIPTIONS:
+				activityStream = activityStream.filter(activity -> setOfDescriptions.contains(activity.getDescription()));
+				break;
+			case SEARCH_BY_DURATION:
+				activityStream = activityStream.filter(activity -> activity.getDuration() >= activitySearch.getDurationFrom())
+						.filter(activity -> activity.getDuration() <= activitySearch.getDurationTo());
+				break;
+			case SEARCH_BY_ALL_PARAMS:
+				activityStream = activityStream.filter(activity -> setOfDescriptions.contains(activity.getDescription()))
+						.filter(activity -> activity.getDuration() >= activitySearch.getDurationFrom())
+						.filter(activity -> activity.getDuration() <= activitySearch.getDurationTo());
+			default:
+				break;
+
+		}
+		List<Activity> activities =	activityStream.collect(Collectors.toList());
 		return activities;
 	}
 }

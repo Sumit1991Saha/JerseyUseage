@@ -9,4 +9,5 @@ public class ActivitySearch {
     int durationFrom;
     int durationTo;
     List<String> descriptions;
+    ActivitySearchType activitySearch;
 }
