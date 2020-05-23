@@ -19,11 +19,34 @@ public class ActivitySearchResource {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response searchActivities(@QueryParam(value = "description") List<String> descriptions) {
+    @Path("v1")
+    public Response searchActivitiesByDescription(@QueryParam(value = "description") List<String> descriptions) {
         System.out.println("Descriptions :- " + descriptions);
 
         Response response;
         List<Activity> activities = activityRepository.findByDescriptions(descriptions);
+        if (activities.isEmpty()) {
+            response = Response.status(Response.Status.NOT_FOUND).build();
+        } else {
+            response = Response.ok(activities).build();
+        }
+        return response;
+    }
+
+    @GET
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Path("v2")
+    public Response searchActivitiesByDescriptionAndDuration(
+            @QueryParam(value = "description") List<String> descriptions,
+            @QueryParam(value = "durationFrom") int durationFrom,
+            @QueryParam(value = "durationTo") int durationTo) {
+        System.out.println("Descriptions :- " + descriptions
+                + ", DurationFrom :- " + durationFrom
+                + ", DurationTo :- " + durationTo);
+
+        Response response;
+        List<Activity> activities = activityRepository.findByDescriptionsAndDuration(descriptions,
+                durationFrom, durationTo);
         if (activities.isEmpty()) {
             response = Response.status(Response.Status.NOT_FOUND).build();
         } else {

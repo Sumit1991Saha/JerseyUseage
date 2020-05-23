@@ -19,7 +19,7 @@ public class ActivityRepositoryStub implements ActivityRepository {
 		Activity activity1 = new Activity();
 		activity1.setId(idCount++);
 		activity1.setDescription("Swimming");
-		activity1.setDuration(55);
+		activity1.setDuration(70);
 		User user1 = new User();
 		user1.setId(5678L);
 		user1.setName("Sumit");
@@ -74,6 +74,18 @@ public class ActivityRepositoryStub implements ActivityRepository {
 		Set<String> setOfDescriptions = new HashSet<>(descriptions);
 		List<Activity> activities = activitiesMap.values()
 				.stream()
+				.filter(activity -> setOfDescriptions.contains(activity.getDescription()))
+				.collect(Collectors.toList());
+		return activities;
+	}
+
+	@Override
+	public List<Activity> findByDescriptionsAndDuration(List<String> descriptions, int durationFrom, int durationTo) {
+		Set<String> setOfDescriptions = new HashSet<>(descriptions);
+		List<Activity> activities = activitiesMap.values()
+				.stream()
+				.filter(activity -> activity.getDuration() >= durationFrom)
+				.filter(activity -> activity.getDuration() <= durationTo)
 				.filter(activity -> setOfDescriptions.contains(activity.getDescription()))
 				.collect(Collectors.toList());
 		return activities;

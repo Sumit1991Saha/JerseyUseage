@@ -65,6 +65,8 @@ public class ClientDriver {
         Activity createdActivity = activityClient.createActivity(activity);
         System.out.println(createdActivity.toString());
         Assert.assertNotNull(createdActivity);
+
+        activityClient.deleteActivity(createdActivity.getId());
     }
 
     @Test
@@ -103,26 +105,52 @@ public class ClientDriver {
     @Test
     public void testDeleteActivity() {
         System.out.println("testDeleteActivity :- ");
-        int idOfActivityToBeDeleted = 1;
+
+        Activity activity = new Activity();
+        activity.setDescription("Jogging");
+        activity.setDuration(45);
+
+        Activity createdActivity = activityClient.createActivity(activity);
+
+        long idOfActivityToBeDeleted = createdActivity.getId();
         activityClient.deleteActivity(idOfActivityToBeDeleted);
 
-        Activity activity = activityClient.getActivityById(idOfActivityToBeDeleted);
-
-        Assert.assertNull(activity);
+        Assert.assertNull(activityClient.getActivityById(idOfActivityToBeDeleted));
     }
 
     @Test
-    public void testSearchActivities() {
-        System.out.println("testSearchActivities :- ");
+    public void testSearchActivitiesUsingSingleQueryParam() {
+        System.out.println("testSearchActivitiesUsingSingleQueryParam :- ");
 
         String param = "description";
         String[] searchVales = {"Swimming", "Jogging"};
         Set<String> descriptions = new HashSet<>(Arrays.asList(searchVales));
 
-        List<Activity> activities = activitySearchClient.searchActivities(param, searchVales);
+        List<Activity> activities = activitySearchClient.searchActivitiesBasedOnDescription(param, searchVales);
         System.out.println(activities);
 
         Assert.assertEquals(searchVales.length, activities.size());
         activities.forEach(activity -> Assert.assertTrue(descriptions.contains(activity.getDescription())));
+    }
+
+    @Test
+    public void testSearchActivitiesUsingMultipleQueryParam() {
+        System.out.println("testSearchActivitiesUsingMultipleQueryParam :- ");
+
+        String firstParam = "description";
+        String[] searchVales = {"Swimming", "Jogging"};
+
+        String secondParam = "durationFrom";
+        int durationFrom = 60;
+
+        String thirdParam = "durationTo";
+        int durationTo = 130;
+
+        //http://localhost:8180/JerseyUseage/webapi/json/search/activities?description=Swimming&description=Jogging&durationFrom=durationFrom&durationTo=durationTo
+        List<Activity> activities = activitySearchClient.searchActivitiesBasedOnDescriptionAndDuration(firstParam, searchVales, secondParam, durationFrom, thirdParam, durationTo);
+        System.out.println(activities);
+
+        Assert.assertEquals(1, activities.size());
+        Assert.assertEquals(searchVales[0], activities.get(0).getDescription());
     }
 }

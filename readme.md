@@ -20,6 +20,8 @@ Resources :-
 3. @Get - Get Activity by id :- http://localhost:8180/JerseyUseage/webapi/json/activities/{activityId}
 4. @Put - Update an Activity :- http://localhost:8180/JerseyUseage/webapi/json/activities/{activityId}
 5. @Delete - Delete an Activity :- http://localhost:8180/JerseyUseage/webapi/json/activities/{activityId}
-6. @GET - Searching using query param :- http://localhost:8180/JerseyUseage/webapi/json/search/activities?description=Swimming&description=Jogging
+6. @GET - Searching using description (query param) :- http://localhost:8180/JerseyUseage/webapi/json/search/activities/v1?description=?&description=?
+7. @GET - Searching using description and duration (query param) :- http://localhost:8180/JerseyUseage/webapi/json/search/activities/v2?description=?&description=?&durationFrom=?&durationTo=?
+
 
 

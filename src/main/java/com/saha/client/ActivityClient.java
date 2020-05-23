@@ -89,7 +89,7 @@ public class ActivityClient {
         return response.readEntity(Activity.class);
     }
 
-    public void deleteActivity(int idOfActivityToBeDeleted) {
+    public void deleteActivity(long idOfActivityToBeDeleted) {
         WebTarget target = client.target(BASE_URL);
 
         //returns data in object's format

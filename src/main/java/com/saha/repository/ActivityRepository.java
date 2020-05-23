@@ -17,4 +17,6 @@ public interface ActivityRepository {
 	void delete(long id);
 
 	List<Activity> findByDescriptions(List<String> descriptions);
+
+	List<Activity> findByDescriptionsAndDuration(List<String> descriptions, int durationFrom, int durationTo);
 }
