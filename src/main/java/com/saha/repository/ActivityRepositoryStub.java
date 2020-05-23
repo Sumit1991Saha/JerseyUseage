@@ -1,6 +1,7 @@
 package com.saha.repository;
 
 import com.saha.model.Activity;
+import com.saha.model.ActivitySearch;
 import com.saha.model.User;
 
 import java.util.ArrayList;
@@ -86,6 +87,18 @@ public class ActivityRepositoryStub implements ActivityRepository {
 				.stream()
 				.filter(activity -> activity.getDuration() >= durationFrom)
 				.filter(activity -> activity.getDuration() <= durationTo)
+				.filter(activity -> setOfDescriptions.contains(activity.getDescription()))
+				.collect(Collectors.toList());
+		return activities;
+	}
+
+	@Override
+	public List<Activity> findByConstraints(ActivitySearch activitySearch) {
+		Set<String> setOfDescriptions = new HashSet<>(activitySearch.getDescriptions());
+		List<Activity> activities = activitiesMap.values()
+				.stream()
+				.filter(activity -> activity.getDuration() >= activitySearch.getDurationFrom())
+				.filter(activity -> activity.getDuration() <= activitySearch.getDurationTo())
 				.filter(activity -> setOfDescriptions.contains(activity.getDescription()))
 				.collect(Collectors.toList());
 		return activities;

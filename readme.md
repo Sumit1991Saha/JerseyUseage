@@ -15,13 +15,23 @@ Important points :-
 
 
 Resources :- 
-1. @Post - Create :- http://localhost:8180/JerseyUseage/webapi/json/activities
-2. @Get - Get All Activities :- http://localhost:8180/JerseyUseage/webapi/json/activities
-3. @Get - Get Activity by id :- http://localhost:8180/JerseyUseage/webapi/json/activities/{activityId}
-4. @Put - Update an Activity :- http://localhost:8180/JerseyUseage/webapi/json/activities/{activityId}
-5. @Delete - Delete an Activity :- http://localhost:8180/JerseyUseage/webapi/json/activities/{activityId}
-6. @GET - Searching using description (query param) :- http://localhost:8180/JerseyUseage/webapi/json/search/activities/v1?description=?&description=?
-7. @GET - Searching using description and duration (query param) :- http://localhost:8180/JerseyUseage/webapi/json/search/activities/v2?description=?&description=?&durationFrom=?&durationTo=?
+1. @POST   - Create 
+            :- http://localhost:8180/JerseyUseage/webapi/json/activities
+2. @GET    - Get All Activities 
+            :- http://localhost:8180/JerseyUseage/webapi/json/activities
+3. @GET    - Get Activity by id 
+            :- http://localhost:8180/JerseyUseage/webapi/json/activities/{activityId}
+4. @PUT    - Update an Activity 
+            :- http://localhost:8180/JerseyUseage/webapi/json/activities/{activityId}
+5. @DELETE - Delete an Activity 
+            :- http://localhost:8180/JerseyUseage/webapi/json/activities/{activityId}
+6. @GET    - Searching using description (query param) 
+            :- http://localhost:8180/JerseyUseage/webapi/json/search/activities/v1?description=?&description=?
+7. @GET    - Searching using description and duration (query param) 
+            :- http://localhost:8180/JerseyUseage/webapi/json/search/activities/v2?description=?&description=?&durationFrom=?&durationTo=?
+8. @POST   - Searching using search object (minimum change required in this workflow if search is performed this way) 
+            :- http://localhost:8180/JerseyUseage/webapi/json/search/activities/v3
+
 
 
 

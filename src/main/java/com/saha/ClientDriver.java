@@ -3,11 +3,13 @@ package com.saha;
 import com.saha.client.ActivityClient;
 import com.saha.client.ActivitySearchClient;
 import com.saha.model.Activity;
+import com.saha.model.ActivitySearch;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -138,7 +140,7 @@ public class ClientDriver {
         System.out.println("testSearchActivitiesUsingMultipleQueryParam :- ");
 
         String firstParam = "description";
-        String[] searchVales = {"Swimming", "Jogging"};
+        String[] descriptions = {"Swimming", "Jogging"};
 
         String secondParam = "durationFrom";
         int durationFrom = 60;
@@ -147,10 +149,34 @@ public class ClientDriver {
         int durationTo = 130;
 
         //http://localhost:8180/JerseyUseage/webapi/json/search/activities?description=Swimming&description=Jogging&durationFrom=durationFrom&durationTo=durationTo
-        List<Activity> activities = activitySearchClient.searchActivitiesBasedOnDescriptionAndDuration(firstParam, searchVales, secondParam, durationFrom, thirdParam, durationTo);
+        List<Activity> activities = activitySearchClient.searchActivitiesBasedOnDescriptionAndDuration(firstParam, descriptions, secondParam, durationFrom, thirdParam, durationTo);
         System.out.println(activities);
 
         Assert.assertEquals(1, activities.size());
-        Assert.assertEquals(searchVales[0], activities.get(0).getDescription());
+        Assert.assertEquals(descriptions[0], activities.get(0).getDescription());
+    }
+
+    @Test
+    public void testSearchActivitiesUsingSearchObject() {
+        System.out.println("testSearchActivitiesUsingSearchObject :- ");
+
+        List<String> descriptions = new ArrayList<String>(){{
+            add("Swimming");
+            add("Jogging");
+        }};
+        int durationFrom = 60;
+        int durationTo = 130;
+
+        ActivitySearch activitySearch = new ActivitySearch();
+        activitySearch.setDescriptions(descriptions);
+        activitySearch.setDurationFrom(durationFrom);
+        activitySearch.setDurationTo(durationTo);
+
+        //http://localhost:8180/JerseyUseage/webapi/json/search/activities?description=Swimming&description=Jogging&durationFrom=durationFrom&durationTo=durationTo
+        List<Activity> activities = activitySearchClient.searchActivitiesBasedOnSearchObject(activitySearch);
+        System.out.println(activities);
+
+        Assert.assertEquals(1, activities.size());
+        Assert.assertEquals(descriptions.get(0), activities.get(0).getDescription());
     }
 }

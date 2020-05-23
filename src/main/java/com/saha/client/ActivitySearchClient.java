@@ -1,11 +1,13 @@
 package com.saha.client;
 
 import com.saha.model.Activity;
+import com.saha.model.ActivitySearch;
 
 import java.net.URI;
 import java.util.List;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
@@ -18,6 +20,7 @@ public class ActivitySearchClient {
     private static final String JSON_RESOURCE_PATH = "json/search/activities/";
     private static final String V1 = "v1";
     private static final String V2 = "v2";
+    private static final String V3 = "v3";
 
     private final Client client;
 
@@ -63,6 +66,24 @@ public class ActivitySearchClient {
 
         //returns data in object's format
         Response response = target.request(MediaType.APPLICATION_JSON).get();
+
+        if (response.getStatus() != Response.Status.OK.getStatusCode()) {
+            throw new RuntimeException(response.getStatus() + " Error Ocurred");
+        }
+
+        return response.readEntity(new GenericType<List<Activity>>(){});
+    }
+
+    public List<Activity> searchActivitiesBasedOnSearchObject(ActivitySearch activitySearch) {
+        URI uri = UriBuilder.fromUri(BASE_URL)
+                .path(JSON_RESOURCE_PATH + V3)
+                .build();
+
+        WebTarget target = client.target(uri);
+
+        //returns data in object's format
+        Response response = target.request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(activitySearch, MediaType.APPLICATION_JSON));
 
         if (response.getStatus() != Response.Status.OK.getStatusCode()) {
             throw new RuntimeException(response.getStatus() + " Error Ocurred");
