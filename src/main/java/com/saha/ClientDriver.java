@@ -92,6 +92,8 @@ public class ClientDriver {
 
         Assert.assertNotNull(updatedActivity);
         Assert.assertEquals(updatedDuration, updatedActivity.getDuration());
+
+        activityClient.deleteActivity(updatedActivity.getId());
     }
 
     @Test(expected = RuntimeException.class)
