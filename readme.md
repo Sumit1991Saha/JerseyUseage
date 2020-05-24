@@ -1,3 +1,14 @@
+Maven command used to setup this project initially:-               
+
+mvn archetype:generate \
+    -DgroupId=com.saha \
+    -DartifactId=JerseyUseage \
+    -DarchetypeGroupId=org.glassfish.jersey.archetypes \
+    -DarchetypeArtifactId=jersey-quickstart-webapp \
+    -DarchetypeVersion=2.29.1 \  
+    -Dpackage=com.saha \
+    -DinteractiveMode=false
+    
 Steps to build and deploy to tomcat :-
 1. Normal mode :- ./buildScript.sh -n
 2. Debug mode :-  ./buildScript.sh -d   (Tomcat's debug port is 8000)
